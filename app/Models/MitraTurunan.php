@@ -30,22 +30,16 @@ class MitraTurunan extends Model
 
         static::creating(function ($mitraTurunan) {
             if (empty($mitraTurunan->mitra_turunan_id)) {
-                // Generate ID dengan format TRN + tahun + nomor urut
-                $year = date('y');
-                $lastNumber = static::where('mitra_turunan_id', 'like', "TRN{$year}%")
-                    ->orderBy('mitra_turunan_id', 'desc')
-                    ->first();
+                // Generate random 8 digit angka
+                do {
+                    $randomId = 'TRN' . mt_rand(10000000, 99999999);
+                } while (static::where('mitra_turunan_id', $randomId)->exists());
 
-                if ($lastNumber) {
-                    $number = (int)substr($lastNumber->mitra_turunan_id, -3) + 1;
-                } else {
-                    $number = 1;
-                }
-
-                $mitraTurunan->mitra_turunan_id = sprintf('TRN%s%03d', $year, $number);
+                $mitraTurunan->mitra_turunan_id = $randomId;
             }
         });
     }
+
 
     // Relationships
     public function mitra()

@@ -23,6 +23,8 @@ Route::middleware('guest')->group(function () {
 // Logout Route (perlu middleware auth)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/profile', [LoginController::class, 'editProfile'])->name('profile.edit');
+    Route::put('/profile', [LoginController::class, 'updateProfile'])->name('profile.update');
 
     // Dashboard route
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -57,7 +59,7 @@ Route::middleware('auth')->group(function () {
         // Statistics and export
         Route::get('export', [UserController::class, 'export'])->middleware('permission:users.export')->name('export');
     });
-       // Additional User Level Routes untuk AJAX
+    // Additional User Level Routes untuk AJAX
     Route::prefix('user-levels')->name('user-levels.')->middleware('permission:user_levels.view')->group(function () {
         Route::get('available-permissions', [UserLevelController::class, 'getAvailablePermissions'])->name('available-permissions');
         Route::get('statistics', [UserLevelController::class, 'statistics'])->middleware('permission:user_levels.statistics')->name('statistics');

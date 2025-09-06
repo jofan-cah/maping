@@ -272,8 +272,7 @@
                     <form method="POST" action="{{ route('logout') }}" class="ml-2">
                         @csrf
                         <button type="submit"
-                            class="p-2 text-gray-400 hover:text-red-600 transition-colors duration-200"
-                            title="Logout">
+                            class="p-2 text-gray-400 hover:text-red-600 transition-colors duration-200" title="Logout">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
                     </form>
@@ -360,9 +359,10 @@
 
                             <div x-show="open" @click.away="open = false" x-transition
                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                                <a href="#"
+                                <a href="{{ route('profile.edit') }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-t-lg">
                                     <i class="fas fa-user mr-2"></i>Profil
+                                </a>
                                 </a>
                                 <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                     <i class="fas fa-cog mr-2"></i>Pengaturan

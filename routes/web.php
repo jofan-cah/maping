@@ -57,6 +57,26 @@ Route::middleware('auth')->group(function () {
         // Statistics and export
         Route::get('export', [UserController::class, 'export'])->middleware('permission:users.export')->name('export');
     });
+       // Additional User Level Routes untuk AJAX
+    Route::prefix('user-levels')->name('user-levels.')->middleware('permission:user_levels.view')->group(function () {
+        Route::get('available-permissions', [UserLevelController::class, 'getAvailablePermissions'])->name('available-permissions');
+        Route::get('statistics', [UserLevelController::class, 'statistics'])->middleware('permission:user_levels.statistics')->name('statistics');
+        // User Level specific actions
+        Route::post('{userLevel}/restore', [UserLevelController::class, 'restore'])->middleware('permission:user_levels.restore')->name('restore');
+        Route::delete('{userLevel}/force-delete', [UserLevelController::class, 'forceDestroy'])->middleware('permission:user_levels.force_delete')->name('force-destroy');
+        Route::post('{userLevel}/toggle-status', [UserLevelController::class, 'toggleStatus'])->middleware('permission:user_levels.toggle_status')->name('toggle-status');
+
+        // Permission management
+        Route::post('{userLevel}/add-permission', [UserLevelController::class, 'addPermission'])->middleware('permission:user_levels.permissions')->name('add-permission');
+        Route::post('{userLevel}/remove-permission', [UserLevelController::class, 'removePermission'])->middleware('permission:user_levels.permissions')->name('remove-permission');
+
+        // Bulk operations
+        Route::post('bulk-action', [UserLevelController::class, 'bulkAction'])->middleware('permission:user_levels.bulk_action')->name('bulk-action');
+
+        // Statistics and utilities
+        Route::get('export', [UserLevelController::class, 'export'])->middleware('permission:user_levels.export')->name('export');
+        Route::post('create-defaults', [UserLevelController::class, 'createDefaults'])->middleware('permission:user_levels.create_defaults')->name('create-defaults');
+    });
 
     // User Levels Management Routes
     Route::middleware('permission:user_levels.view')->group(function () {
@@ -74,26 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/user-levels/{userLevel}', [UserLevelController::class, 'destroy'])->middleware('permission:user_levels.delete')->name('user-levels.destroy');
     });
 
-    // Additional User Level Routes untuk AJAX
-    Route::prefix('user-levels')->name('user-levels.')->middleware('permission:user_levels.view')->group(function () {
-        Route::get('statistics', [UserLevelController::class, 'statistics'])->middleware('permission:user_levels.statistics')->name('statistics');
-        // User Level specific actions
-        Route::post('{userLevel}/restore', [UserLevelController::class, 'restore'])->middleware('permission:user_levels.restore')->name('restore');
-        Route::delete('{userLevel}/force-delete', [UserLevelController::class, 'forceDestroy'])->middleware('permission:user_levels.force_delete')->name('force-destroy');
-        Route::post('{userLevel}/toggle-status', [UserLevelController::class, 'toggleStatus'])->middleware('permission:user_levels.toggle_status')->name('toggle-status');
 
-        // Permission management
-        Route::post('{userLevel}/add-permission', [UserLevelController::class, 'addPermission'])->middleware('permission:user_levels.permissions')->name('add-permission');
-        Route::post('{userLevel}/remove-permission', [UserLevelController::class, 'removePermission'])->middleware('permission:user_levels.permissions')->name('remove-permission');
-
-        // Bulk operations
-        Route::post('bulk-action', [UserLevelController::class, 'bulkAction'])->middleware('permission:user_levels.bulk_action')->name('bulk-action');
-
-        // Statistics and utilities
-        Route::get('available-permissions', [UserLevelController::class, 'getAvailablePermissions'])->middleware('permission:user_levels.permissions')->name('available-permissions');
-        Route::get('export', [UserLevelController::class, 'export'])->middleware('permission:user_levels.export')->name('export');
-        Route::post('create-defaults', [UserLevelController::class, 'createDefaults'])->middleware('permission:user_levels.create_defaults')->name('create-defaults');
-    });
 
     // Mitra Management Routes
     Route::middleware('permission:mitras.view')->group(function () {

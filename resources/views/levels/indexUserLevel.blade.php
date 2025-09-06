@@ -695,6 +695,7 @@ function loadStatistics() {
 function loadAvailablePermissions() {
     $.get('{{ route("user-levels.available-permissions") }}')
         .done(function(response) {
+            console.log('Available permissions response:', response); // Debug log
             if (response.success) {
                 availablePermissions = response.data;
             }

@@ -72,6 +72,7 @@
 
     <div class="flex h-screen bg-gray-100">
         <!-- Sidebar -->
+        <!-- Sidebar -->
         <div class="fixed inset-y-0 left-0 z-40 w-64 overflow-y-auto transition duration-300 transform bg-white border-r border-gray-200 lg:translate-x-0 lg:static lg:inset-0"
             :class="{ 'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen }">
 
@@ -99,84 +100,187 @@
                     </a>
 
                     <!-- User Management -->
-                    <div x-data="{ open: {{ request()->routeIs('users.*') || request()->routeIs('user-levels.*') ? 'true' : 'false' }} }">
-                        <button @click="open = !open"
-                            class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
-                            <i class="fas fa-users mr-3 text-gray-500 group-hover:text-gray-700"></i>
-                            User Management
-                            <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
-                                :class="{ 'rotate-180': open }"></i>
-                        </button>
-                        <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
-                            <a href="{{ route('users.index') }}"
-                                class="block px-4 py-2 text-sm rounded {{ request()->routeIs('users.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
-                                <i class="fas fa-list mr-2"></i>Daftar User
-                            </a>
-                            <a href="{{ route('user-levels.index') }}"
-                                class="block px-4 py-2 text-sm rounded {{ request()->routeIs('user-levels.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
-                                <i class="fas fa-user-shield mr-2"></i>User Levels
-                            </a>
+                    @if (auth()->user()->hasAnyPermission(['users.view', 'user_levels.view']))
+                        <div x-data="{ open: {{ request()->routeIs('users.*') || request()->routeIs('user-levels.*') ? 'true' : 'false' }} }">
+                            <button @click="open = !open"
+                                class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
+                                <i class="fas fa-users mr-3 text-gray-500 group-hover:text-gray-700"></i>
+                                User Management
+                                <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
+                                    :class="{ 'rotate-180': open }"></i>
+                            </button>
+                            <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
+                                @if (auth()->user()->hasPermission('users.view'))
+                                    <a href="{{ route('users.index') }}"
+                                        class="block px-4 py-2 text-sm rounded {{ request()->routeIs('users.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
+                                        <i class="fas fa-list mr-2"></i>Daftar User
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('user_levels.view'))
+                                    <a href="{{ route('user-levels.index') }}"
+                                        class="block px-4 py-2 text-sm rounded {{ request()->routeIs('user-levels.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
+                                        <i class="fas fa-user-shield mr-2"></i>User Levels
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <!-- Mitra Management -->
-                    <div x-data="{ open: {{ request()->routeIs('mitras.*') ? 'true' : 'false' }} }">
-                        <button @click="open = !open"
-                            class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
-                            <i class="fas fa-building mr-3 text-gray-500 group-hover:text-gray-700"></i>
-                            Mitra Management
-                            <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
-                                :class="{ 'rotate-180': open }"></i>
-                        </button>
-                        <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
-                            <a href="{{ route('mitras.index') }}"
-                                class="block px-4 py-2 text-sm rounded {{ request()->routeIs('mitras.index') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
-                                <i class="fas fa-list mr-2"></i>Daftar Mitra
-                            </a>
-                            <a href="{{ route('mitra-turunans.index') }}"
-                                class="block px-4 py-2 text-sm rounded {{ request()->routeIs('mitra-turunans.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
-                                <i class="fas fa-map-marker-alt mr-2"></i>Point Mapping
-                            </a>
+                    @if (auth()->user()->hasAnyPermission(['mitras.view', 'points.view']))
+                        <div x-data="{ open: {{ request()->routeIs('mitras.*') || request()->routeIs('mitra-turunans.*') ? 'true' : 'false' }} }">
+                            <button @click="open = !open"
+                                class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
+                                <i class="fas fa-building mr-3 text-gray-500 group-hover:text-gray-700"></i>
+                                Mitra Management
+                                <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
+                                    :class="{ 'rotate-180': open }"></i>
+                            </button>
+                            <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
+                                @if (auth()->user()->hasPermission('mitras.view'))
+                                    <a href="{{ route('mitras.index') }}"
+                                        class="block px-4 py-2 text-sm rounded {{ request()->routeIs('mitras.index') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
+                                        <i class="fas fa-list mr-2"></i>Daftar Mitra
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('points.view'))
+                                    <a href="{{ route('mitra-turunans.index') }}"
+                                        class="block px-4 py-2 text-sm rounded {{ request()->routeIs('mitra-turunans.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-600 hover:bg-gray-100' }}">
+                                        <i class="fas fa-map-marker-alt mr-2"></i>Point Mapping
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                    </div>
+                    @endif
+
                     <!-- Map -->
-                    <a href="{{ route('maps.index') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs('map.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <i
-                            class="fas fa-map-marked-alt mr-3 {{ request()->routeIs('map.*') ? 'text-primary-600' : 'text-gray-500 group-hover:text-gray-700' }}"></i>
-                        Map
-                    </a>
+                    @if (auth()->user()->hasPermission('maps.view'))
+                        <a href="{{ route('maps.index') }}"
+                            class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs('maps.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:bg-gray-100' }}">
+                            <i
+                                class="fas fa-map-marked-alt mr-3 {{ request()->routeIs('maps.*') ? 'text-primary-600' : 'text-gray-500 group-hover:text-gray-700' }}"></i>
+                            Map
+                        </a>
+                    @endif
 
                     <!-- Coverage -->
-                    <a href="{{ route('coverage.index') }}"
-                        class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs('coverage.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:bg-gray-100' }}">
-                        <i
-                            class="fas fa-signal mr-3 {{ request()->routeIs('coverage.*') ? 'text-primary-600' : 'text-gray-500 group-hover:text-gray-700' }}"></i>
-                        Coverage
-                    </a>
-
-
-                    <!-- Settings -->
-                    <a href="#"
-                        class="group flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100">
-                        <i class="fas fa-cog mr-3 text-gray-500 group-hover:text-gray-700"></i>
-                        Pengaturan
-                    </a>
+                    @if (auth()->user()->hasPermission('coverage.view'))
+                        <a href="{{ route('coverage.index') }}"
+                            class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg {{ request()->routeIs('coverage.*') ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:bg-gray-100' }}">
+                            <i
+                                class="fas fa-signal mr-3 {{ request()->routeIs('coverage.*') ? 'text-primary-600' : 'text-gray-500 group-hover:text-gray-700' }}"></i>
+                            Coverage
+                        </a>
+                    @endif
 
                     <!-- Reports -->
-                    <a href="#"
-                        class="group flex items-center px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100">
-                        <i class="fas fa-chart-bar mr-3 text-gray-500 group-hover:text-gray-700"></i>
-                        Laporan
-                    </a>
+                    {{-- @if (auth()->user()->hasAnyPermission(['reports.view', 'reports.analytics']))
+                        <div x-data="{ open: {{ request()->routeIs('reports.*') ? 'true' : 'false' }} }">
+                            <button @click="open = !open"
+                                class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
+                                <i class="fas fa-chart-bar mr-3 text-gray-500 group-hover:text-gray-700"></i>
+                                Laporan
+                                <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
+                                    :class="{ 'rotate-180': open }"></i>
+                            </button>
+                            <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
+                                @if (auth()->user()->hasPermission('reports.view'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-chart-line mr-2"></i>Laporan Umum
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('reports.analytics'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-analytics mr-2"></i>Analytics
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('reports.export'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-download mr-2"></i>Export Data
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif --}}
+
+                    <!-- Settings -->
+                    {{-- @if (auth()->user()->hasAnyPermission(['settings.view', 'settings.edit', 'system.logs']))
+                        <div x-data="{ open: {{ request()->routeIs('settings.*') || request()->routeIs('system.*') ? 'true' : 'false' }} }">
+                            <button @click="open = !open"
+                                class="group flex items-center w-full px-4 py-3 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none">
+                                <i class="fas fa-cog mr-3 text-gray-500 group-hover:text-gray-700"></i>
+                                Pengaturan
+                                <i class="fas fa-chevron-down ml-auto transition-transform duration-200"
+                                    :class="{ 'rotate-180': open }"></i>
+                            </button>
+                            <div x-show="open" x-transition class="ml-8 mt-2 space-y-2">
+                                @if (auth()->user()->hasPermission('settings.view'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-wrench mr-2"></i>Pengaturan Umum
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('settings.system'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-server mr-2"></i>Pengaturan Sistem
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('system.logs'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-file-alt mr-2"></i>System Logs
+                                    </a>
+                                @endif
+
+                                @if (auth()->user()->hasPermission('system.monitoring'))
+                                    <a href="#"
+                                        class="block px-4 py-2 text-sm rounded text-gray-600 hover:bg-gray-100">
+                                        <i class="fas fa-heartbeat mr-2"></i>Monitoring
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif --}}
 
                 </div>
             </nav>
 
             <!-- User Profile di Sidebar -->
+            <div class="absolute bottom-0 left-0 w-full p-4 bg-gray-50 border-t border-gray-200">
+                <div class="flex items-center">
+                    <img class="w-10 h-10 rounded-full object-cover"
+                        src="{{ auth()->user()->profile_picture_url ?? 'https://via.placeholder.com/40' }}"
+                        alt="{{ auth()->user()->name }}">
+                    <div class="ml-3 flex-1 min-w-0">
+                        <p class="text-sm font-medium text-gray-900 truncate">
+                            {{ auth()->user()->name }}
+                        </p>
+                        <p class="text-xs text-gray-500 truncate">
+                            {{ auth()->user()->level_name ?? 'User' }}
+                        </p>
+                    </div>
+                    <form method="POST" action="{{ route('logout') }}" class="ml-2">
+                        @csrf
+                        <button type="submit"
+                            class="p-2 text-gray-400 hover:text-red-600 transition-colors duration-200"
+                            title="Logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
 
         </div>
-
         <!-- Main Content -->
         <div class="flex-1 flex flex-col overflow-hidden lg:ml-0">
 

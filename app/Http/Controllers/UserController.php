@@ -17,6 +17,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        $user = auth()->user();
+    dd([
+        'user_id' => $user->user_id,
+        'user_level_id' => $user->user_level_id,
+        'userLevel' => $user->userLevel,
+        'userLevel_permissions' => $user->userLevel ? $user->userLevel->permissions : null,
+        'hasPermission_result' => $user->hasPermission('users.view'),
+        'is_active' => $user->is_active
+    ]);
         if ($request->ajax()) {
             $query = User::with('userLevel')->withTrashed();
 

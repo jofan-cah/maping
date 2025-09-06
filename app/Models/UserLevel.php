@@ -206,59 +206,149 @@ class UserLevel extends Model
      * Static method untuk create default levels
      */
     public static function createDefaultLevels()
-    {
-        $defaultLevels = [
-            [
-                'name' => 'Super Administrator',
-                'description' => 'Level tertinggi dengan akses penuh ke seluruh sistem',
-                'priority' => 100,
-                'is_system' => true,
-                'permissions' => [
-                    'users.view', 'users.create', 'users.edit', 'users.delete', 'users.export',
-                    'user_levels.view', 'user_levels.create', 'user_levels.edit', 'user_levels.delete',
-                    'content.view', 'content.create', 'content.edit', 'content.delete', 'content.publish',
-                    'settings.view', 'settings.edit', 'settings.system',
-                    'reports.view', 'reports.export', 'reports.analytics',
-                    'system.backup', 'system.logs', 'system.maintenance'
-                ]
-            ],
-            [
-                'name' => 'Administrator',
-                'description' => 'Administrator dengan akses luas namun terbatas pada beberapa fungsi sistem',
-                'priority' => 80,
-                'is_system' => true,
-                'permissions' => [
-                    'users.view', 'users.create', 'users.edit', 'users.delete', 'users.export',
-                    'user_levels.view',
-                    'content.view', 'content.create', 'content.edit', 'content.delete', 'content.publish',
-                    'settings.view', 'settings.edit',
-                    'reports.view', 'reports.export'
-                ]
-            ],
-            [
-                'name' => 'Editor',
-                'description' => 'Dapat mengelola konten dan melihat laporan dasar',
-                'priority' => 60,
-                'permissions' => [
-                    'users.view',
-                    'content.view', 'content.create', 'content.edit', 'content.delete', 'content.publish',
-                    'reports.view'
-                ]
-            ],
-            [
-                'name' => 'User',
-                'description' => 'User biasa dengan akses terbatas',
-                'priority' => 20,
-                'is_system' => true,
-                'permissions' => ['users.view']
-            ]
-        ];
+{
+    $defaultLevels = [
+        [
+            'name' => 'Super Administrator',
+            'description' => 'Level tertinggi dengan akses penuh ke seluruh sistem',
+            'priority' => 100,
+            'is_system' => true,
+            'permissions' => [
+                // Full access to everything
+                'users.view', 'users.create', 'users.edit', 'users.delete', 'users.restore', 'users.force_delete',
+                'users.toggle_status', 'users.export', 'users.statistics', 'users.bulk_action',
 
-        foreach ($defaultLevels as $levelData) {
-            static::firstOrCreate(
-                ['name' => $levelData['name']],
-                $levelData
-            );
-        }
+                'user_levels.view', 'user_levels.create', 'user_levels.edit', 'user_levels.delete',
+                'user_levels.restore', 'user_levels.force_delete', 'user_levels.toggle_status',
+                'user_levels.permissions', 'user_levels.export', 'user_levels.statistics',
+                'user_levels.bulk_action', 'user_levels.create_defaults',
+
+                'mitras.view', 'mitras.create', 'mitras.edit', 'mitras.delete', 'mitras.duplicate',
+                'mitras.export', 'mitras.statistics', 'mitras.bulk_action', 'mitras.colors', 'mitras.points_summary',
+
+                'points.view', 'points.create', 'points.edit', 'points.delete', 'points.upload_kmz',
+                'points.export', 'points.statistics', 'points.bulk_action', 'points.map_data', 'points.update_coordinates',
+
+                'routing.nearest_points', 'routing.points_in_radius', 'routing.calculate_route',
+                'routing.optimal_route', 'routing.coverage_analysis', 'routing.gap_analysis',
+
+                'maps.view', 'maps.points', 'maps.search', 'maps.statistics', 'maps.fullscreen', 'maps.export',
+
+                'coverage.view', 'coverage.points', 'coverage.nearest', 'coverage.calculate',
+                'coverage.gap_analysis', 'coverage.route',
+
+                'reports.view', 'reports.create', 'reports.export', 'reports.analytics',
+                'reports.statistics', 'reports.charts',
+
+                'settings.view', 'settings.edit', 'settings.system', 'settings.database',
+                'settings.backup', 'settings.maintenance',
+
+                'system.logs', 'system.monitoring', 'system.cache', 'system.queue',
+                'system.scheduler', 'system.debug',
+
+                'dashboard.view', 'dashboard.statistics', 'dashboard.widgets', 'dashboard.export'
+            ]
+        ],
+        [
+            'name' => 'Administrator',
+            'description' => 'Administrator dengan akses luas namun terbatas pada beberapa fungsi sistem',
+            'priority' => 80,
+            'is_system' => true,
+            'permissions' => [
+                'users.view', 'users.create', 'users.edit', 'users.delete', 'users.toggle_status',
+                'users.export', 'users.statistics', 'users.bulk_action',
+
+                'user_levels.view',
+
+                'mitras.view', 'mitras.create', 'mitras.edit', 'mitras.delete', 'mitras.duplicate',
+                'mitras.export', 'mitras.statistics', 'mitras.bulk_action', 'mitras.colors', 'mitras.points_summary',
+
+                'points.view', 'points.create', 'points.edit', 'points.delete', 'points.upload_kmz',
+                'points.export', 'points.statistics', 'points.bulk_action', 'points.map_data', 'points.update_coordinates',
+
+                'routing.nearest_points', 'routing.points_in_radius', 'routing.calculate_route',
+                'routing.optimal_route', 'routing.coverage_analysis', 'routing.gap_analysis',
+
+                'maps.view', 'maps.points', 'maps.search', 'maps.statistics', 'maps.fullscreen', 'maps.export',
+
+                'coverage.view', 'coverage.points', 'coverage.nearest', 'coverage.calculate',
+                'coverage.gap_analysis', 'coverage.route',
+
+                'reports.view', 'reports.create', 'reports.export', 'reports.analytics',
+                'reports.statistics', 'reports.charts',
+
+                'settings.view', 'settings.edit',
+
+                'dashboard.view', 'dashboard.statistics', 'dashboard.widgets', 'dashboard.export'
+            ]
+        ],
+        [
+            'name' => 'Manager',
+            'description' => 'Manager dengan akses ke manajemen mitra dan analisis',
+            'priority' => 60,
+            'permissions' => [
+                'users.view',
+
+                'mitras.view', 'mitras.create', 'mitras.edit', 'mitras.export', 'mitras.statistics', 'mitras.points_summary',
+
+                'points.view', 'points.create', 'points.edit', 'points.upload_kmz',
+                'points.export', 'points.statistics', 'points.map_data',
+
+                'routing.nearest_points', 'routing.points_in_radius', 'routing.calculate_route',
+                'routing.optimal_route', 'routing.coverage_analysis', 'routing.gap_analysis',
+
+                'maps.view', 'maps.points', 'maps.search', 'maps.statistics', 'maps.fullscreen', 'maps.export',
+
+                'coverage.view', 'coverage.points', 'coverage.nearest', 'coverage.calculate',
+                'coverage.gap_analysis', 'coverage.route',
+
+                'reports.view', 'reports.export', 'reports.analytics', 'reports.statistics', 'reports.charts',
+
+                'dashboard.view', 'dashboard.statistics', 'dashboard.widgets'
+            ]
+        ],
+        [
+            'name' => 'Operator',
+            'description' => 'Operator dengan akses terbatas untuk operasional sehari-hari',
+            'priority' => 40,
+            'permissions' => [
+                'mitras.view', 'mitras.export', 'mitras.statistics', 'mitras.points_summary',
+
+                'points.view', 'points.create', 'points.edit', 'points.export', 'points.statistics', 'points.map_data',
+
+                'routing.nearest_points', 'routing.points_in_radius', 'routing.calculate_route',
+
+                'maps.view', 'maps.points', 'maps.search', 'maps.statistics', 'maps.fullscreen',
+
+                'coverage.view', 'coverage.points', 'coverage.nearest', 'coverage.calculate', 'coverage.route',
+
+                'reports.view', 'reports.statistics',
+
+                'dashboard.view', 'dashboard.statistics'
+            ]
+        ],
+        [
+            'name' => 'User',
+            'description' => 'User biasa dengan akses viewing saja',
+            'priority' => 20,
+            'is_system' => true,
+            'permissions' => [
+                'mitras.view', 'mitras.statistics',
+                'points.view', 'points.statistics', 'points.map_data',
+                'maps.view', 'maps.points', 'maps.search', 'maps.statistics',
+                'coverage.view', 'coverage.points',
+                'reports.view',
+                'dashboard.view'
+            ]
+        ]
+    ];
+
+    foreach ($defaultLevels as $levelData) {
+        static::firstOrCreate(
+            ['name' => $levelData['name']],
+            $levelData
+        );
     }
+}
+
 }

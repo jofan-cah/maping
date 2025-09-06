@@ -571,43 +571,111 @@ class UserLevelController extends Controller
     public function getAvailablePermissions(Request $request)
     {
         try {
-            // Define available permissions
+            // Define available permissions berdasarkan modul yang ada di aplikasi
             $permissions = [
-                'users' => [
-                    'users.view' => 'Lihat User',
-                    'users.create' => 'Buat User',
+                'user_management' => [
+                    'users.view' => 'Lihat Daftar User',
+                    'users.create' => 'Buat User Baru',
                     'users.edit' => 'Edit User',
                     'users.delete' => 'Hapus User',
-                    'users.export' => 'Export User',
-                    'users.import' => 'Import User',
+                    'users.restore' => 'Pulihkan User',
+                    'users.force_delete' => 'Hapus Permanen User',
+                    'users.toggle_status' => 'Aktifkan/Nonaktifkan User',
+                    'users.export' => 'Export Data User',
+                    'users.statistics' => 'Lihat Statistik User',
+                    'users.bulk_action' => 'Aksi Bulk User',
                 ],
-                'user_levels' => [
-                    'user_levels.view' => 'Lihat User Level',
-                    'user_levels.create' => 'Buat User Level',
+                'user_level_management' => [
+                    'user_levels.view' => 'Lihat Daftar User Level',
+                    'user_levels.create' => 'Buat User Level Baru',
                     'user_levels.edit' => 'Edit User Level',
                     'user_levels.delete' => 'Hapus User Level',
+                    'user_levels.restore' => 'Pulihkan User Level',
+                    'user_levels.force_delete' => 'Hapus Permanen User Level',
+                    'user_levels.toggle_status' => 'Aktifkan/Nonaktifkan User Level',
+                    'user_levels.permissions' => 'Kelola Permissions',
+                    'user_levels.export' => 'Export Data User Level',
+                    'user_levels.statistics' => 'Lihat Statistik User Level',
+                    'user_levels.bulk_action' => 'Aksi Bulk User Level',
+                    'user_levels.create_defaults' => 'Buat Default Levels',
                 ],
-                'content' => [
-                    'content.view' => 'Lihat Konten',
-                    'content.create' => 'Buat Konten',
-                    'content.edit' => 'Edit Konten',
-                    'content.delete' => 'Hapus Konten',
-                    'content.publish' => 'Publish Konten',
+                'mitra_management' => [
+                    'mitras.view' => 'Lihat Daftar Mitra',
+                    'mitras.create' => 'Buat Mitra Baru',
+                    'mitras.edit' => 'Edit Mitra',
+                    'mitras.delete' => 'Hapus Mitra',
+                    'mitras.duplicate' => 'Duplikasi Mitra',
+                    'mitras.export' => 'Export Data Mitra',
+                    'mitras.statistics' => 'Lihat Statistik Mitra',
+                    'mitras.bulk_action' => 'Aksi Bulk Mitra',
+                    'mitras.colors' => 'Kelola Warna Mitra',
+                    'mitras.points_summary' => 'Lihat Ringkasan Points Mitra',
                 ],
-                'settings' => [
+                'points_management' => [
+                    'points.view' => 'Lihat Daftar Points',
+                    'points.create' => 'Buat Point Baru',
+                    'points.edit' => 'Edit Point',
+                    'points.delete' => 'Hapus Point',
+                    'points.upload_kmz' => 'Upload File KMZ/KML',
+                    'points.export' => 'Export Data Points',
+                    'points.statistics' => 'Lihat Statistik Points',
+                    'points.bulk_action' => 'Aksi Bulk Points',
+                    'points.map_data' => 'Akses Data Map',
+                    'points.update_coordinates' => 'Update Koordinat Points',
+                ],
+                'routing_analysis' => [
+                    'routing.nearest_points' => 'Cari Points Terdekat',
+                    'routing.points_in_radius' => 'Points dalam Radius',
+                    'routing.calculate_route' => 'Hitung Route',
+                    'routing.optimal_route' => 'Route Optimal',
+                    'routing.coverage_analysis' => 'Analisis Coverage',
+                    'routing.gap_analysis' => 'Analisis Gap Coverage',
+                ],
+                'maps_visualization' => [
+                    'maps.view' => 'Lihat Maps',
+                    'maps.points' => 'Akses Points di Map',
+                    'maps.search' => 'Search di Map',
+                    'maps.statistics' => 'Statistik Map',
+                    'maps.fullscreen' => 'Mode Fullscreen Map',
+                    'maps.export' => 'Export Data Map',
+                ],
+                'coverage_analysis' => [
+                    'coverage.view' => 'Lihat Coverage Analysis',
+                    'coverage.points' => 'Akses Data Points Coverage',
+                    'coverage.nearest' => 'Cari Points Terdekat',
+                    'coverage.calculate' => 'Hitung Coverage Area',
+                    'coverage.gap_analysis' => 'Analisis Gap Coverage',
+                    'coverage.route' => 'Akses Routing Coverage',
+                ],
+                'reports_analytics' => [
+                    'reports.view' => 'Lihat Laporan',
+                    'reports.create' => 'Buat Laporan',
+                    'reports.export' => 'Export Laporan',
+                    'reports.analytics' => 'Analytics Dashboard',
+                    'reports.statistics' => 'Statistik Umum',
+                    'reports.charts' => 'Grafik dan Chart',
+                ],
+                'system_settings' => [
                     'settings.view' => 'Lihat Pengaturan',
                     'settings.edit' => 'Edit Pengaturan',
                     'settings.system' => 'Pengaturan Sistem',
+                    'settings.database' => 'Pengaturan Database',
+                    'settings.backup' => 'Backup & Restore',
+                    'settings.maintenance' => 'Mode Maintenance',
                 ],
-                'reports' => [
-                    'reports.view' => 'Lihat Laporan',
-                    'reports.export' => 'Export Laporan',
-                    'reports.analytics' => 'Analytics',
+                'system_administration' => [
+                    'system.logs' => 'Akses System Logs',
+                    'system.monitoring' => 'System Monitoring',
+                    'system.cache' => 'Kelola Cache',
+                    'system.queue' => 'Kelola Queue',
+                    'system.scheduler' => 'Kelola Scheduler',
+                    'system.debug' => 'Debug Information',
                 ],
-                'system' => [
-                    'system.backup' => 'Backup Sistem',
-                    'system.logs' => 'Lihat Logs',
-                    'system.maintenance' => 'Mode Maintenance',
+                'dashboard_access' => [
+                    'dashboard.view' => 'Akses Dashboard',
+                    'dashboard.statistics' => 'Lihat Statistik Dashboard',
+                    'dashboard.widgets' => 'Kelola Widget Dashboard',
+                    'dashboard.export' => 'Export Data Dashboard',
                 ]
             ];
 
@@ -622,6 +690,7 @@ class UserLevelController extends Controller
             ], 500);
         }
     }
+
 
     /**
      * Get user level statistics via AJAX

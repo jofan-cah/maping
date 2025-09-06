@@ -133,32 +133,32 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     // Permission methods
-    public function hasPermission($permission)
-    {
-        if (!$this->is_active) {
-            return false;
-        }
+    // public function hasPermission($permission)
+    // {
+    //     if (!$this->is_active) {
+    //         return false;
+    //     }
 
-        return $this->userLevel && $this->userLevel->hasPermission($permission);
-    }
+    //     return $this->userLevel && $this->userLevel->hasPermission($permission);
+    // }
 
-    public function hasAnyPermission($permissions)
-    {
-        if (!$this->is_active) {
-            return false;
-        }
+    // public function hasAnyPermission($permissions)
+    // {
+    //     if (!$this->is_active) {
+    //         return false;
+    //     }
 
-        return $this->userLevel && $this->userLevel->hasAnyPermission($permissions);
-    }
+    //     return $this->userLevel && $this->userLevel->hasAnyPermission($permissions);
+    // }
 
-    public function hasAllPermissions($permissions)
-    {
-        if (!$this->is_active) {
-            return false;
-        }
+    // public function hasAllPermissions($permissions)
+    // {
+    //     if (!$this->is_active) {
+    //         return false;
+    //     }
 
-        return $this->userLevel && $this->userLevel->hasAllPermissions($permissions);
-    }
+    //     return $this->userLevel && $this->userLevel->hasAllPermissions($permissions);
+    // }
 
     public function isSuperAdmin()
     {
@@ -227,5 +227,67 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->activate();
         }
         return $restored;
+    }
+
+    public function hasPermission($permission)
+    {
+        if (!$this->userLevel) {
+            return false;
+        }
+
+        return $this->userLevel->hasPermission($permission);
+    }
+
+    // public function hasPermission($permission)
+    // {
+    //     if (!$this->userLevel) {
+    //         return false;
+    //     }
+
+    //     return $this->userLevel->hasPermission($permission);
+    // }
+
+    /**
+     * Check if user has any of the given permissions
+     */
+    public function hasAnyPermission($permissions)
+    {
+        if (!$this->userLevel) {
+            return false;
+        }
+
+        if (!is_array($permissions)) {
+            $permissions = [$permissions];
+        }
+
+        foreach ($permissions as $permission) {
+            if ($this->hasPermission($permission)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if user has all of the given permissions
+     */
+    public function hasAllPermissions($permissions)
+    {
+        if (!$this->userLevel) {
+            return false;
+        }
+
+        if (!is_array($permissions)) {
+            $permissions = [$permissions];
+        }
+
+        foreach ($permissions as $permission) {
+            if (!$this->hasPermission($permission)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

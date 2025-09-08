@@ -170,11 +170,23 @@ Route::middleware('auth')->group(function () {
     });
 
     // Maps Routes
+    // Maps Routes
     Route::prefix('maps')->name('maps.')->middleware('permission:maps.view')->group(function () {
         Route::get('/', [MapController::class, 'index'])->name('index');
         Route::get('points', [MapController::class, 'getPoints'])->middleware('permission:maps.points')->name('points');
         Route::get('statistics', [MapController::class, 'getStatistics'])->middleware('permission:maps.statistics')->name('statistics');
         Route::get('search', [MapController::class, 'searchPoints'])->middleware('permission:maps.search')->name('search');
+
+        // Routes baru yang ditambahkan
+        Route::get('clusters', [MapController::class, 'getClusteredPoints'])->middleware('permission:maps.points')->name('clusters');
+        Route::get('point/{id}', [MapController::class, 'getPointDetail'])->middleware('permission:maps.points')->name('point.detail');
+        Route::get('mitra/{id}/points', [MapController::class, 'getPointsByMitra'])->middleware('permission:maps.points')->name('mitra.points');
+        Route::get('bounds', [MapController::class, 'getBounds'])->middleware('permission:maps.points')->name('bounds');
+
+        // Cache management routes
+        Route::post('cache/clear', [MapController::class, 'clearCache'])->middleware('permission:maps.points')->name('cache.clear');
+        Route::get('cache/info', [MapController::class, 'getCacheInfo'])->middleware('permission:maps.points')->name('cache.info');
+        Route::post('cache/refresh', [MapController::class, 'refreshCache'])->middleware('permission:maps.points')->name('cache.refresh');
     });
 
     // Coverage Routes

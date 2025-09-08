@@ -50,13 +50,25 @@
         align-items: center;
         margin-bottom: 8px;
         cursor: pointer;
-        padding: 4px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
+        padding: 6px 8px;
+        border-radius: 6px;
+        transition: all 0.2s;
+        border: 2px solid transparent;
     }
 
     .mitra-legend-item:hover {
         background-color: #f3f4f6;
+        transform: translateX(2px);
+    }
+
+    .mitra-legend-item.opacity-50 {
+        opacity: 0.4;
+    }
+
+    .mitra-legend-item.active {
+        background-color: #dbeafe;
+        border-color: #3b82f6;
+        transform: translateX(4px);
     }
 
     .mitra-color-circle {

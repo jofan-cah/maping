@@ -169,12 +169,12 @@ Route::middleware('auth')->group(function () {
         Route::post('optimal-route', [MitraTurunanController::class, 'suggestOptimalRoute'])->middleware('permission:routing.optimal_route')->name('optimal-route');
     });
 
-    // Maps Routes
-    Route::prefix('maps')->name('maps.')->middleware('permission:maps.view')->group(function () {
+    Route::prefix('maps')->name('maps.')->group(function () {
         Route::get('/', [MapController::class, 'index'])->name('index');
-        Route::get('points', [MapController::class, 'getPoints'])->middleware('permission:maps.points')->name('points');
-        Route::get('statistics', [MapController::class, 'getStatistics'])->middleware('permission:maps.statistics')->name('statistics');
-        Route::get('search', [MapController::class, 'searchPoints'])->middleware('permission:maps.search')->name('search');
+        Route::get('points', [MapController::class, 'getPoints'])->name('points');
+        Route::get('statistics', [MapController::class, 'getStatistics'])->name('statistics');
+        Route::get('search', [MapController::class, 'searchPoints'])->name('search');
+        Route::post('cache/clear', [MapController::class, 'clearCache'])->name('cache.clear');
     });
 
     // Coverage Routes

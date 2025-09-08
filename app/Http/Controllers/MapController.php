@@ -8,9 +8,7 @@ use Illuminate\Http\Request;
 
 class MapController extends Controller
 {
-    /**
-     * Display all points on map
-     */
+   
     public function index(Request $request)
     {
         // Ambil semua data points dengan mitra

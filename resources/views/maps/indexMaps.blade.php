@@ -26,9 +26,7 @@
         border-radius: 8px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         padding: 15px;
-        max-width: 320px;
-        max-height: calc(100vh - 40px);
-        overflow-y: auto;
+        max-width: 300px;
     }
 
     .map-legend {
@@ -50,25 +48,13 @@
         align-items: center;
         margin-bottom: 8px;
         cursor: pointer;
-        padding: 6px 8px;
-        border-radius: 6px;
-        transition: all 0.2s;
-        border: 2px solid transparent;
+        padding: 4px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
     }
 
     .mitra-legend-item:hover {
         background-color: #f3f4f6;
-        transform: translateX(2px);
-    }
-
-    .mitra-legend-item.opacity-50 {
-        opacity: 0.4;
-    }
-
-    .mitra-legend-item.active {
-        background-color: #dbeafe;
-        border-color: #3b82f6;
-        transform: translateX(4px);
     }
 
     .mitra-color-circle {
@@ -88,15 +74,14 @@
         background: white;
         border-radius: 4px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        max-height: 250px;
+        max-height: 200px;
         overflow-y: auto;
         z-index: 1001;
         display: none;
-        border: 1px solid #e5e7eb;
     }
 
     .search-result-item {
-        padding: 10px 12px;
+        padding: 8px 12px;
         border-bottom: 1px solid #e5e7eb;
         cursor: pointer;
         transition: background-color 0.2s;
@@ -108,15 +93,6 @@
 
     .search-result-item:last-child {
         border-bottom: none;
-    }
-
-    .search-result-header {
-        font-weight: 600;
-        font-size: 12px;
-        padding: 8px 12px;
-        background-color: #f9fafb;
-        color: #6b7280;
-        border-bottom: 1px solid #e5e7eb;
     }
 
     .stats-panel {
@@ -168,58 +144,6 @@
         background: #f3f4f6;
     }
 
-    /* Loading indicator */
-    .loading-indicator {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 2000;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        display: none;
-    }
-
-    .spinner {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #f3f3f3;
-        border-top: 2px solid #3498db;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        display: inline-block;
-        margin-right: 10px;
-    }
-
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Cache status indicator */
-    .cache-status {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 6px 10px;
-        border-radius: 4px;
-        font-size: 11px;
-        font-family: monospace;
-    }
-
-    .cache-hit {
-        background: rgba(34, 197, 94, 0.8);
-    }
-
-    .cache-miss {
-        background: rgba(239, 68, 68, 0.8);
-    }
-
     /* Fullscreen styles */
     .map-fullscreen {
         position: fixed !important;
@@ -240,7 +164,7 @@
 
     /* Collapsible controls */
     .controls-collapsed {
-        transform: translateX(-290px);
+        transform: translateX(-270px);
         transition: transform 0.3s ease;
     }
 
@@ -261,98 +185,11 @@
     .controls-toggle:hover {
         background: #f3f4f6;
     }
-
-    /* Enhanced controls styling */
-    .control-section {
-        margin-bottom: 20px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #e5e7eb;
-    }
-
-    .control-section:last-child {
-        border-bottom: none;
-        margin-bottom: 0;
-    }
-
-    .control-label {
-        display: block;
-        font-weight: 600;
-        color: #374151;
-        margin-bottom: 8px;
-        font-size: 14px;
-    }
-
-    .btn-group {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .btn-action {
-        width: 100%;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 6px;
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-    }
-
-    .btn-primary {
-        background: #3b82f6;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: #2563eb;
-        transform: translateY(-1px);
-    }
-
-    .btn-success {
-        background: #10b981;
-        color: white;
-    }
-
-    .btn-success:hover {
-        background: #059669;
-        transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-        background: #6b7280;
-        color: white;
-    }
-
-    .btn-secondary:hover {
-        background: #4b5563;
-        transform: translateY(-1px);
-    }
-
-    .btn-warning {
-        background: #f59e0b;
-        color: white;
-    }
-
-    .btn-warning:hover {
-        background: #d97706;
-        transform: translateY(-1px);
-    }
 </style>
 @endpush
 
 @section('content')
 <div class="h-screen relative">
-    <!-- Loading Indicator -->
-    <div id="loading-indicator" class="loading-indicator">
-        <div class="spinner"></div>
-        <span>Memuat data peta...</span>
-    </div>
-
     <!-- Map Container -->
     <div id="map" class="w-full h-full"></div>
 
@@ -363,89 +200,70 @@
             <i class="fas fa-chevron-left"></i>
         </button>
 
-        <!-- Search Section -->
-        <div class="control-section">
-            <label class="control-label">
-                <i class="fas fa-search mr-2"></i>Pencarian
-            </label>
-            <div class="relative">
-                <input type="text" id="search-input" placeholder="Cari point, mitra, atau koordinat..."
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <div id="search-results" class="search-results"></div>
+        <div class="space-y-4">
+            <!-- Search -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Cari Point</label>
+                <div class="relative">
+                    <input type="text" id="search-input" placeholder="Nama point atau koordinat..."
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <div id="search-results" class="search-results"></div>
+                </div>
             </div>
-        </div>
 
-        <!-- Mitra Filter -->
-        <div class="control-section">
-            <label class="control-label">
-                <i class="fas fa-filter mr-2"></i>Filter Mitra
-            </label>
-            <select id="mitra-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <option value="">Semua Mitra</option>
-                @foreach($mitras as $mitra)
-                    <option value="{{ $mitra->mitra_id }}" data-color="{{ $mitra->warna_pt }}">
-                        {{ $mitra->nama_pt }} ({{ $mitra->mitra_turunans_count }})
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- View Options -->
-        <div class="control-section">
-            <label class="control-label">
-                <i class="fas fa-eye mr-2"></i>Opsi Tampilan
-            </label>
-            <div class="space-y-2">
-                <label class="flex items-center">
-                    <input type="checkbox" id="cluster-toggle" checked class="mr-2">
-                    <span class="text-sm">Cluster markers</span>
-                </label>
-                <label class="flex items-center">
-                    <input type="checkbox" id="show-labels" class="mr-2">
-                    <span class="text-sm">Tampilkan label</span>
-                </label>
-                <label class="flex items-center">
-                    <input type="checkbox" id="show-coordinates" class="mr-2">
-                    <span class="text-sm">Tampilkan koordinat</span>
-                </label>
-                <label class="flex items-center">
-                    <input type="checkbox" id="viewport-loading" checked class="mr-2">
-                    <span class="text-sm">Optimasi viewport</span>
-                </label>
+            <!-- Mitra Filter -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Filter Mitra</label>
+                <select id="mitra-filter" class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">Semua Mitra</option>
+                    @foreach($mitras as $mitra)
+                        <option value="{{ $mitra->mitra_id }}" data-color="{{ $mitra->warna_pt }}">
+                            {{ $mitra->nama_pt }} ({{ $mitra->mitra_turunans_count }})
+                        </option>
+                    @endforeach
+                </select>
             </div>
-        </div>
 
-        <!-- Quick Actions -->
-        <div class="control-section">
-            <label class="control-label">
-                <i class="fas fa-bolt mr-2"></i>Aksi Cepat
-            </label>
-            <div class="btn-group">
-                <button id="fit-all-points" class="btn-action btn-primary">
-                    <i class="fas fa-expand-arrows-alt"></i>
-                    Lihat Semua Point
-                </button>
-                <button id="my-location" class="btn-action btn-success">
-                    <i class="fas fa-crosshairs"></i>
-                    Lokasi Saya
-                </button>
-                <button id="refresh-data" class="btn-action btn-secondary">
-                    <i class="fas fa-sync-alt"></i>
-                    Refresh Data
-                </button>
-                <button id="clear-cache" class="btn-action btn-warning">
-                    <i class="fas fa-trash"></i>
-                    Clear Cache
-                </button>
+            <!-- View Options -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Opsi Tampilan</label>
+                <div class="space-y-2">
+                    <label class="flex items-center">
+                        <input type="checkbox" id="cluster-toggle" checked class="mr-2">
+                        <span class="text-sm">Cluster markers</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="show-labels" class="mr-2">
+                        <span class="text-sm">Tampilkan label</span>
+                    </label>
+                    <label class="flex items-center">
+                        <input type="checkbox" id="show-coordinates" class="mr-2">
+                        <span class="text-sm">Tampilkan koordinat</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Aksi Cepat</label>
+                <div class="space-y-2">
+                    <button id="fit-all-points" class="w-full px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600">
+                        Lihat Semua Point
+                    </button>
+                    <button id="my-location" class="w-full px-3 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600">
+                        Lokasi Saya
+                    </button>
+                    <button id="refresh-data" class="w-full px-3 py-1 bg-gray-500 text-white text-sm rounded hover:bg-gray-600">
+                        Refresh Data
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Statistics Panel -->
     <div class="stats-panel">
-        <h3 class="font-medium text-gray-900 mb-3">
-            <i class="fas fa-chart-bar mr-2"></i>Statistik
-        </h3>
+        <h3 class="font-medium text-gray-900 mb-3">Statistik</h3>
         <div class="stat-item">
             <span class="text-sm text-gray-600">Total Points:</span>
             <span class="text-sm font-medium" id="total-points">{{ $stats['total_points'] }}</span>
@@ -456,37 +274,26 @@
         </div>
         <div class="stat-item">
             <span class="text-sm text-gray-600">Ditampilkan:</span>
-            <span class="text-sm font-medium" id="visible-points">0</span>
-        </div>
-        <div class="stat-item">
-            <span class="text-sm text-gray-600">Cache Status:</span>
-            <span class="text-xs font-medium" id="cache-status">-</span>
+            <span class="text-sm font-medium" id="visible-points">{{ $stats['total_points'] }}</span>
         </div>
     </div>
 
     <!-- Legend -->
     <div class="map-legend">
-        <h3 class="font-medium text-gray-900 mb-3">
-            <i class="fas fa-list mr-2"></i>Legend Mitra
-        </h3>
+        <h3 class="font-medium text-gray-900 mb-3">Legend Mitra</h3>
         <div id="legend-content">
             @foreach($stats['points_by_mitra'] as $mitra)
-                @if($mitra->points_count > 0)
-                <div class="mitra-legend-item" data-mitra-id="{{ $mitra->mitra_id }}">
-                    <div class="mitra-color-circle" style="background-color: {{ $mitra->warna_pt }}"></div>
+                @if($mitra['points_count'] > 0)
+                <div class="mitra-legend-item" data-mitra-id="{{ $mitra['mitra_id'] }}">
+                    <div class="mitra-color-circle" style="background-color: {{ $mitra['warna_pt'] }}"></div>
                     <div class="flex-1">
-                        <div class="text-sm font-medium text-gray-900">{{ $mitra->nama_pt }}</div>
-                        <div class="text-xs text-gray-500">{{ $mitra->points_count }} points</div>
+                        <div class="text-sm font-medium text-gray-900">{{ $mitra['nama_pt'] }}</div>
+                        <div class="text-xs text-gray-500">{{ $mitra['points_count'] }} points</div>
                     </div>
                 </div>
                 @endif
             @endforeach
         </div>
-    </div>
-
-    <!-- Cache Status Indicator -->
-    <div id="cache-indicator" class="cache-status">
-        Cache: Ready
     </div>
 
     <!-- Fullscreen Toggle -->
@@ -533,22 +340,18 @@
 
 <script>
 let map;
-let allPoints = [];
-let currentPoints = [];
+let allPoints = @json($points);
+let currentPoints = [...allPoints];
 let markersLayer;
 let clusterGroup;
 let searchTimeout;
-let loadTimeout;
 let currentPopup = null;
-let cacheHits = 0;
-let totalRequests = 0;
-let isViewportLoading = true;
 
 // Initialize map
 $(document).ready(function() {
     initializeMap();
     setupEventListeners();
-    loadInitialData();
+    loadPoints();
 });
 
 function initializeMap() {
@@ -595,31 +398,16 @@ function initializeMap() {
     });
 
     map.addLayer(clusterGroup);
-
-    // Add map event listeners for viewport loading
-    map.on('moveend zoomend', function() {
-        if (isViewportLoading) {
-            clearTimeout(loadTimeout);
-            loadTimeout = setTimeout(() => {
-                loadPointsInViewport();
-            }, 300);
-        }
-    });
 }
 
 function setupEventListeners() {
-    // Search input with enhanced functionality
+    // Search input
     $('#search-input').on('input', function() {
         clearTimeout(searchTimeout);
         const query = $(this).val().trim();
 
         if (query.length === 0) {
             $('#search-results').hide();
-            return;
-        }
-
-        if (query.length < 2) {
-            $('#search-results').html('<div class="search-result-item text-gray-500">Ketik minimal 2 karakter</div>').show();
             return;
         }
 
@@ -654,20 +442,10 @@ function setupEventListeners() {
         toggleCoordinates($(this).is(':checked'));
     });
 
-    $('#viewport-loading').on('change', function() {
-        isViewportLoading = $(this).is(':checked');
-        if (isViewportLoading) {
-            loadPointsInViewport();
-        } else {
-            loadAllPoints();
-        }
-    });
-
     // Quick actions
     $('#fit-all-points').on('click', fitAllPoints);
     $('#my-location').on('click', showMyLocation);
     $('#refresh-data').on('click', refreshMapData);
-    $('#clear-cache').on('click', clearMapCache);
     $('#fullscreen-toggle').on('click', toggleFullscreen);
 
     // Controls toggle
@@ -680,60 +458,28 @@ function setupEventListeners() {
     });
 }
 
-function loadInitialData() {
-    showLoading(true);
-    loadStatistics();
+function toggleControls() {
+    const controls = $('#map-controls');
+    const toggleBtn = $('#controls-toggle i');
 
-    if (isViewportLoading) {
-        loadPointsInViewport();
+    if (controls.hasClass('controls-collapsed')) {
+        // Show controls
+        controls.removeClass('controls-collapsed');
+        toggleBtn.removeClass('fa-chevron-right').addClass('fa-chevron-left');
     } else {
-        loadAllPoints();
+        // Hide controls
+        controls.addClass('controls-collapsed');
+        toggleBtn.removeClass('fa-chevron-left').addClass('fa-chevron-right');
     }
 }
 
-function loadPointsInViewport() {
+function loadPoints() {
     const selectedMitra = $('#mitra-filter').val();
-    const bounds = map.getBounds();
-    const zoom = map.getZoom();
-
-    showLoading(true);
-
-    $.get('{{ route("maps.points") }}', {
-        mitra_id: selectedMitra,
-        bounds: {
-            north: bounds.getNorth(),
-            south: bounds.getSouth(),
-            east: bounds.getEast(),
-            west: bounds.getWest()
-        },
-        zoom: zoom
-    })
-    .done(function(response) {
-        trackCacheUsage(response);
-        if (response.success) {
-            currentPoints = response.data;
-            displayPoints();
-            updateStatistics();
-        }
-    })
-    .fail(function() {
-        showNotification('Gagal memuat data points', 'error');
-    })
-    .always(function() {
-        showLoading(false);
-    });
-}
-
-function loadAllPoints() {
-    const selectedMitra = $('#mitra-filter').val();
-
-    showLoading(true);
 
     $.get('{{ route("maps.points") }}', {
         mitra_id: selectedMitra
     })
     .done(function(response) {
-        trackCacheUsage(response);
         if (response.success) {
             allPoints = response.data;
             currentPoints = [...allPoints];
@@ -743,114 +489,7 @@ function loadAllPoints() {
     })
     .fail(function() {
         showNotification('Gagal memuat data points', 'error');
-    })
-    .always(function() {
-        showLoading(false);
     });
-}
-
-function loadStatistics() {
-    $.get('{{ route("maps.statistics") }}')
-    .done(function(response) {
-        if (response.success) {
-            $('#total-points').text(response.data.total_points);
-            $('#total-mitras').text(response.data.total_mitras);
-            updateCacheStatus(response.cached ? 'HIT' : 'MISS');
-        }
-    });
-}
-
-function searchPoints(query) {
-    showLoading(true, 'Mencari...');
-
-    $.get('{{ route("maps.search") }}', {
-        q: query
-    })
-    .done(function(response) {
-        trackCacheUsage(response);
-        if (response.success) {
-            displaySearchResults(response.data, query);
-        }
-    })
-    .fail(function() {
-        $('#search-results').html('<div class="search-result-item text-red-500">Error saat mencari</div>').show();
-    })
-    .always(function() {
-        showLoading(false);
-    });
-}
-
-function displaySearchResults(results, query) {
-    const container = $('#search-results');
-    container.empty();
-
-    if (results.length === 0) {
-        container.html('<div class="search-result-item text-gray-500">Tidak ada hasil ditemukan untuk "' + query + '"</div>');
-    } else {
-        // Group results by type
-        const pointResults = results.filter(r => r.type !== 'mitra');
-        const mitraResults = results.filter(r => r.type === 'mitra');
-
-        // Add points section
-        if (pointResults.length > 0) {
-            container.append('<div class="search-result-header">POINTS (' + pointResults.length + ')</div>');
-            pointResults.forEach(point => {
-                const item = $(`
-                    <div class="search-result-item" data-point-id="${point.id}" data-type="point">
-                        <div class="font-medium text-sm">${point.name}</div>
-                        <div class="text-xs text-gray-500 flex items-center">
-                            <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${point.mitra.color}"></div>
-                            ${point.mitra.name} • ${point.coordinates}
-                        </div>
-                    </div>
-                `);
-
-                item.on('click', function() {
-                    zoomToPoint(point);
-                    container.hide();
-                    $('#search-input').val('');
-                });
-
-                container.append(item);
-            });
-        }
-
-        // Add mitra section if searching by mitra name
-        if (mitraResults.length > 0) {
-            container.append('<div class="search-result-header">MITRA (' + mitraResults.length + ')</div>');
-            mitraResults.forEach(mitra => {
-                const item = $(`
-                    <div class="search-result-item" data-mitra-id="${mitra.id}" data-type="mitra">
-                        <div class="font-medium text-sm flex items-center">
-                            <div class="w-3 h-3 rounded-full mr-2" style="background-color: ${mitra.color}"></div>
-                            ${mitra.name}
-                        </div>
-                        <div class="text-xs text-gray-500">${mitra.points_count} points</div>
-                    </div>
-                `);
-
-                item.on('click', function() {
-                    $('#mitra-filter').val(mitra.id).trigger('change');
-                    container.hide();
-                    $('#search-input').val('');
-                });
-
-                container.append(item);
-            });
-        }
-    }
-
-    container.show();
-}
-
-function filterPointsByMitra(mitraId) {
-    showLoading(true);
-
-    if (isViewportLoading) {
-        loadPointsInViewport();
-    } else {
-        loadAllPoints();
-    }
 }
 
 function displayPoints() {
@@ -884,7 +523,7 @@ function displayPoints() {
 
         // Add click event for detailed view
         marker.on('click', function() {
-            showPointDetail(point.id);
+            showPointDetail(point);
         });
 
         clusterGroup.addLayer(marker);
@@ -916,6 +555,62 @@ function createPopupContent(point) {
     `;
 }
 
+function searchPoints(query) {
+    $.get('{{ route("maps.search") }}', {
+        q: query
+    })
+    .done(function(response) {
+        if (response.success) {
+            displaySearchResults(response.data);
+        }
+    });
+}
+
+function displaySearchResults(results) {
+    const container = $('#search-results');
+    container.empty();
+
+    if (results.length === 0) {
+        container.html('<div class="search-result-item text-gray-500">Tidak ada hasil ditemukan</div>');
+    } else {
+        results.forEach(point => {
+            const item = $(`
+                <div class="search-result-item" data-point-id="${point.id}">
+                    <div class="font-medium text-sm">${point.name}</div>
+                    <div class="text-xs text-gray-500 flex items-center">
+                        <div class="w-2 h-2 rounded-full mr-2" style="background-color: ${point.mitra.color}"></div>
+                        ${point.mitra.name} • ${point.coordinates}
+                    </div>
+                </div>
+            `);
+
+            item.on('click', function() {
+                zoomToPoint(point);
+                container.hide();
+                $('#search-input').val('');
+            });
+
+            container.append(item);
+        });
+    }
+
+    container.show();
+}
+
+function filterPointsByMitra(mitraId) {
+    if (mitraId === '') {
+        currentPoints = [...allPoints];
+    } else {
+        currentPoints = allPoints.filter(point => point.mitra.id === mitraId);
+    }
+
+    displayPoints();
+
+    if (currentPoints.length > 0) {
+        fitPointsInView();
+    }
+}
+
 function zoomToPoint(point) {
     map.setView([point.latitude, point.longitude], 15);
 
@@ -928,50 +623,36 @@ function zoomToPoint(point) {
 }
 
 function showPointDetail(pointId) {
-    showLoading(true, 'Memuat detail...');
+    const point = allPoints.find(p => p.id === pointId);
+    if (!point) return;
 
-    $.get(`{{ route('maps.points') }}/../point/${pointId}`)
-    .done(function(response) {
-        if (response.success) {
-            const point = response.data;
+    $('#modal-point-name').text(point.name);
 
-            $('#modal-point-name').text(point.name);
+    const content = `
+        <div class="text-sm space-y-2">
+            <div><strong>ID:</strong> ${point.id}</div>
+            <div><strong>Mitra:</strong>
+                <span class="inline-flex items-center">
+                    <div class="w-3 h-3 rounded-full mr-2" style="background-color: ${point.mitra.color}"></div>
+                    ${point.mitra.name}
+                </span>
+            </div>
+            <div><strong>Koordinat:</strong> ${point.coordinates}</div>
+            <div><strong>Latitude:</strong> ${point.latitude}</div>
+            <div><strong>Longitude:</strong> ${point.longitude}</div>
+            ${point.description ? `<div><strong>Deskripsi:</strong> ${point.description}</div>` : ''}
+            ${point.has_file ? '<div><strong>File:</strong> <span class="text-green-600">Ada file terlampir</span></div>' : ''}
+            <div><strong>Dibuat:</strong> ${new Date(point.created_at).toLocaleString('id-ID')}</div>
+        </div>
+    `;
 
-            const content = `
-                <div class="text-sm space-y-3">
-                    <div><strong>ID:</strong> ${point.id}</div>
-                    <div><strong>Mitra:</strong>
-                        <span class="inline-flex items-center">
-                            <div class="w-3 h-3 rounded-full mr-2" style="background-color: ${point.mitra.color}"></div>
-                            ${point.mitra.name}
-                        </span>
-                    </div>
-                    <div><strong>Koordinat:</strong> ${point.coordinates}</div>
-                    <div><strong>Latitude:</strong> ${point.latitude}</div>
-                    <div><strong>Longitude:</strong> ${point.longitude}</div>
-                    ${point.description ? `<div><strong>Deskripsi:</strong> ${point.description}</div>` : ''}
-                    ${point.type_point ? `<div><strong>Tipe:</strong> ${point.type_point}</div>` : ''}
-                    ${point.has_file ? '<div><strong>File:</strong> <span class="text-green-600">Ada file terlampir</span></div>' : ''}
-                    <div><strong>Dibuat:</strong> ${new Date(point.created_at).toLocaleString('id-ID')}</div>
-                    <div><strong>Diupdate:</strong> ${new Date(point.updated_at).toLocaleString('id-ID')}</div>
-                </div>
-            `;
+    $('#modal-point-content').html(content);
 
-            $('#modal-point-content').html(content);
-
-            $('#view-on-google-maps').off('click').on('click', function() {
-                openGoogleMaps(point.coordinates);
-            });
-
-            $('#point-detail-modal').removeClass('hidden');
-        }
-    })
-    .fail(function() {
-        showNotification('Gagal memuat detail point', 'error');
-    })
-    .always(function() {
-        showLoading(false);
+    $('#view-on-google-maps').off('click').on('click', function() {
+        openGoogleMaps(point.coordinates);
     });
+
+    $('#point-detail-modal').removeClass('hidden');
 }
 
 function closePointModal() {
@@ -996,41 +677,40 @@ function toggleClustering(enabled) {
 
 function toggleLabels(show) {
     // Implementation for showing/hiding labels
-    showNotification('Fitur label dalam pengembangan', 'info');
+    // This would require additional marker customization
+    showNotification('Fitur label akan diimplementasikan', 'info');
 }
 
 function toggleCoordinates(show) {
     // Implementation for showing coordinates on markers
-    showNotification('Fitur koordinat dalam pengembangan', 'info');
-}
-
-function toggleControls() {
-    const controls = $('#map-controls');
-    const toggleBtn = $('#controls-toggle i');
-
-    if (controls.hasClass('controls-collapsed')) {
-        // Show controls
-        controls.removeClass('controls-collapsed');
-        toggleBtn.removeClass('fa-chevron-right').addClass('fa-chevron-left');
-    } else {
-        // Hide controls
-        controls.addClass('controls-collapsed');
-        toggleBtn.removeClass('fa-chevron-left').addClass('fa-chevron-right');
-    }
+    showNotification('Fitur koordinat akan diimplementasikan', 'info');
 }
 
 function fitAllPoints() {
-    if (currentPoints.length === 0) {
-        showNotification('Tidak ada points untuk ditampilkan', 'warning');
-        return;
-    }
+    if (currentPoints.length === 0) return;
 
     const group = new L.featureGroup();
     clusterGroup.eachLayer(function(layer) {
         group.addLayer(layer);
     });
 
-    if (group.getLayers().length > 0) {
+    map.fitBounds(group.getBounds(), {
+        padding: [20, 20]
+    });
+}
+
+function fitPointsInView() {
+    if (currentPoints.length === 0) return;
+
+    const bounds = [];
+    currentPoints.forEach(point => {
+        if (point.latitude !== 0 && point.longitude !== 0) {
+            bounds.push([point.latitude, point.longitude]);
+        }
+    });
+
+    if (bounds.length > 0) {
+        const group = new L.featureGroup(bounds.map(coord => L.marker(coord)));
         map.fitBounds(group.getBounds(), {
             padding: [20, 20]
         });
@@ -1039,8 +719,6 @@ function fitAllPoints() {
 
 function showMyLocation() {
     if (navigator.geolocation) {
-        showLoading(true, 'Mencari lokasi...');
-
         navigator.geolocation.getCurrentPosition(function(position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
@@ -1051,13 +729,9 @@ function showMyLocation() {
                 .addTo(map)
                 .bindPopup('Lokasi Anda')
                 .openPopup();
-
-            showNotification('Lokasi ditemukan', 'success');
         }, function() {
             showNotification('Tidak dapat mengakses lokasi', 'error');
         });
-
-        showLoading(false);
     } else {
         showNotification('Geolocation tidak didukung browser', 'error');
     }
@@ -1065,32 +739,12 @@ function showMyLocation() {
 
 function refreshMapData() {
     showNotification('Memuat ulang data...', 'info');
-    loadInitialData();
-}
-
-function clearMapCache() {
-    showLoading(true, 'Clearing cache...');
-
-    $.post('{{ route("maps.cache.clear") }}', {
-        _token: '{{ csrf_token() }}',
-        type: 'all'
-    })
-    .done(function(response) {
-        if (response.success) {
-            showNotification('Cache berhasil dibersihkan', 'success');
-            loadInitialData(); // Reload data
-        }
-    })
-    .fail(function() {
-        showNotification('Gagal membersihkan cache', 'error');
-    })
-    .always(function() {
-        showLoading(false);
-    });
+    loadPoints();
 }
 
 function toggleFullscreen() {
     const mapContainer = $('#map').parent();
+    const mapElement = $('#map');
 
     if (!mapContainer.hasClass('map-fullscreen')) {
         // Enter fullscreen mode
@@ -1102,7 +756,7 @@ function toggleFullscreen() {
             map.invalidateSize();
         }, 100);
 
-        showNotification('Mode fullscreen aktif. Tekan ESC untuk keluar.', 'info');
+        showNotification('Mode fullscreen aktif. Tekan ESC atau klik tombol untuk keluar.', 'info');
     } else {
         // Exit fullscreen mode
         mapContainer.removeClass('map-fullscreen');
@@ -1115,42 +769,27 @@ function toggleFullscreen() {
     }
 }
 
-function showLoading(show, message = 'Memuat...') {
-    if (show) {
-        $('#loading-indicator span').text(message);
-        $('#loading-indicator').show();
-    } else {
-        $('#loading-indicator').hide();
+// Handle ESC key for fullscreen exit
+$(document).on('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const mapContainer = $('#map').parent();
+        if (mapContainer.hasClass('map-fullscreen')) {
+            toggleFullscreen();
+        }
+
+        // Also close point detail modal if open
+        if (!$('#point-detail-modal').hasClass('hidden')) {
+            closePointModal();
+        }
+
+        // Hide search results
+        $('#search-results').hide();
     }
-}
+});
 
 function updateStatistics() {
+    $('#total-points').text(allPoints.length);
     $('#visible-points').text(currentPoints.length);
-}
-
-function trackCacheUsage(response) {
-    totalRequests++;
-    if (response.cached) cacheHits++;
-
-    const hitRate = ((cacheHits / totalRequests) * 100).toFixed(1);
-    updateCacheStatus(response.cached ? 'HIT' : 'MISS', hitRate);
-}
-
-function updateCacheStatus(status, hitRate = null) {
-    const statusElement = $('#cache-status');
-    const indicatorElement = $('#cache-indicator');
-
-    if (status === 'HIT') {
-        statusElement.text('HIT').addClass('text-green-600').removeClass('text-red-600');
-        indicatorElement.removeClass('cache-miss').addClass('cache-hit');
-    } else {
-        statusElement.text('MISS').addClass('text-red-600').removeClass('text-green-600');
-        indicatorElement.removeClass('cache-hit').addClass('cache-miss');
-    }
-
-    if (hitRate !== null) {
-        indicatorElement.text(`Cache: ${hitRate}% hit rate`);
-    }
 }
 
 function openGoogleMaps(coordinates) {
@@ -1158,22 +797,14 @@ function openGoogleMaps(coordinates) {
 }
 
 function showNotification(message, type = 'info') {
+    // Simple notification system
     const notification = $(`
         <div class="fixed top-4 right-4 z-[10001] max-w-sm p-4 rounded-lg shadow-lg ${
             type === 'error' ? 'bg-red-500 text-white' :
             type === 'success' ? 'bg-green-500 text-white' :
-            type === 'warning' ? 'bg-yellow-500 text-white' :
             'bg-blue-500 text-white'
         }">
-            <div class="flex items-center">
-                <i class="fas ${
-                    type === 'error' ? 'fa-exclamation-circle' :
-                    type === 'success' ? 'fa-check-circle' :
-                    type === 'warning' ? 'fa-exclamation-triangle' :
-                    'fa-info-circle'
-                } mr-2"></i>
-                ${message}
-            </div>
+            ${message}
         </div>
     `);
 
@@ -1183,24 +814,6 @@ function showNotification(message, type = 'info') {
         notification.fadeOut(() => notification.remove());
     }, 3000);
 }
-
-// Handle ESC key for fullscreen exit and modal close
-$(document).on('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const mapContainer = $('#map').parent();
-        if (mapContainer.hasClass('map-fullscreen')) {
-            toggleFullscreen();
-        }
-
-        // Close point detail modal if open
-        if (!$('#point-detail-modal').hasClass('hidden')) {
-            closePointModal();
-        }
-
-        // Hide search results
-        $('#search-results').hide();
-    }
-});
 
 // Close modal when clicking outside
 $(document).on('click', '#point-detail-modal', function(e) {

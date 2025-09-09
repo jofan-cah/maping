@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +27,7 @@
         /* Left Side - Visual/Branding */
         .login-visual {
             flex: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -42,7 +43,7 @@
         }
 
         .brand-logo {
-            width: 120px;
+            width: 100%;
             height: 120px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
@@ -53,6 +54,14 @@
             backdrop-filter: blur(10px);
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
+
+        .brand-logo img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+        }
+
+
 
         .brand-logo i {
             font-size: 3.5rem;
@@ -214,7 +223,7 @@
             transition: color 0.3s ease;
         }
 
-        .form-input:focus + .input-icon {
+        .form-input:focus+.input-icon {
             color: #667eea;
         }
 
@@ -284,7 +293,7 @@
             transition: all 0.3s ease;
         }
 
-        .custom-checkbox input:checked + .checkbox-mark {
+        .custom-checkbox input:checked+.checkbox-mark {
             background: #667eea;
             border-color: #667eea;
         }
@@ -302,7 +311,7 @@
             transform: rotate(45deg);
         }
 
-        .custom-checkbox input:checked + .checkbox-mark::after {
+        .custom-checkbox input:checked+.checkbox-mark::after {
             display: block;
         }
 
@@ -327,7 +336,7 @@
         .login-btn {
             width: 100%;
             padding: 15px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #dc2626, #991b1b);
             color: white;
             border: none;
             border-radius: 10px;
@@ -419,7 +428,8 @@
 
             .form-input {
                 padding: 12px 15px 12px 45px;
-                font-size: 16px; /* Prevent zoom on iOS */
+                font-size: 16px;
+                /* Prevent zoom on iOS */
             }
 
             .input-icon {
@@ -434,31 +444,33 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-wrapper">
         <!-- Left Side - Visual/Branding -->
         <div class="login-visual">
             <div class="visual-content">
                 <div class="brand-logo">
-                    <i class="fas fa-map-marked-alt"></i>
+                    <img src="{{ asset('f1logonew.png') }}" class="" alt="">
                 </div>
-                <h1 class="brand-title">MapViv F1</h1>
-                <p class="brand-subtitle">
-                      </p>
+                <h1 class="brand-title">Welcome to Map By FiberOne</h1>
+                {{-- <p class="brand-subtitle">
+                    Sistem manajemen jaringan fiber optik yang modern dan reliable untuk kebutuhan internet masa depan
+                </p> --}}
 
                 <div class="features-list">
+                    {{-- <div class="feature-item">
+                        <i class="fas fa-wifi"></i>
+                        <span>High-Speed Internet Management</span>
+                    </div> --}}
                     <div class="feature-item">
-                        <i class="fas fa-map"></i>
-                        <span>Real-time Map Visualization</span>
+                        <i class="fas fa-network-wired"></i>
+                        <span>Fiber Network Monitoring</span>
                     </div>
-                    <div class="feature-item">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Advanced Analytics</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-users"></i>
-                        <span>Multi-user Collaboration</span>
-                    </div>
+                    {{-- <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Real-time Analytics</span>
+                    </div> --}}
                     <div class="feature-item">
                         <i class="fas fa-shield-alt"></i>
                         <span>Secure & Reliable</span>
@@ -476,24 +488,24 @@
                 </div>
 
                 <!-- Alert Messages -->
-                @if(session('success'))
-                <div class="alert alert-success" id="successAlert">
-                    <i class="fas fa-check-circle"></i>
-                    <span>{{ session('success') }}</span>
-                    <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                @if (session('success'))
+                    <div class="alert alert-success" id="successAlert">
+                        <i class="fas fa-check-circle"></i>
+                        <span>{{ session('success') }}</span>
+                        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 @endif
 
-                @if($errors->has('login'))
-                <div class="alert alert-danger" id="errorAlert">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>{{ $errors->first('login') }}</span>
-                    <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
+                @if ($errors->has('login'))
+                    <div class="alert alert-danger" id="errorAlert">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>{{ $errors->first('login') }}</span>
+                        <button type="button" class="alert-close" onclick="this.parentElement.style.display='none'">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 @endif
 
                 <!-- Login Form -->
@@ -503,42 +515,33 @@
                     <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <div class="input-wrapper">
-                            <input type="email"
-                                   class="form-input @error('email') is-invalid @enderror"
-                                   id="email"
-                                   name="email"
-                                   value="{{ old('email') }}"
-                                   placeholder="Enter your email"
-                                   required>
+                            <input type="email" class="form-input @error('email') is-invalid @enderror" id="email"
+                                name="email" value="{{ old('email') }}" placeholder="Enter your email" required>
                             <i class="fas fa-envelope input-icon"></i>
                         </div>
                         @error('email')
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            {{ $message }}
-                        </div>
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">Password</label>
                         <div class="input-wrapper">
-                            <input type="password"
-                                   class="form-input @error('password') is-invalid @enderror"
-                                   id="password"
-                                   name="password"
-                                   placeholder="Enter your password"
-                                   required>
+                            <input type="password" class="form-input @error('password') is-invalid @enderror"
+                                id="password" name="password" placeholder="Enter your password" required>
                             <i class="fas fa-lock input-icon"></i>
                             <button type="button" class="password-toggle" id="togglePassword">
                                 <i class="fas fa-eye" id="eyeIcon"></i>
                             </button>
                         </div>
                         @error('password')
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            {{ $message }}
-                        </div>
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                {{ $message }}
+                            </div>
                         @enderror
                     </div>
 
@@ -626,4 +629,5 @@
         });
     </script>
 </body>
+
 </html>
